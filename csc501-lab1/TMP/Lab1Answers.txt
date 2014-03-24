@@ -1,0 +1,43 @@
+Rituraj Singh Chauhan--------rsinghc--------CSC501------PA1------
+
+1.    What are the advantages and disadvantages of each of the two scheduling policies? 
+Also, give the advantages and disadvantages of the round robin scheduling policy originally 
+implemented in Xinu.
+A1)	Both the algorithms given are very different and unique. We have:
+	1)Random Scheduling Algorithm:
+		In random scheduling algorithms the system selects a process randomly and executes the process till it exhausts its QUANTUM.
+	The major advantages of random scheduling are:
+		1.No Starvation:
+		In RANDOM scheduling any process will not starve, thus every process gets its own QUANTUM to execute.
+		2.No distinction between higher priority process(Statistical Fairness):
+		It does not distinguish in between higher priorities and lower priorities, gives every process about the same QUANTA to execute no matter what is its priority
+	The major disadvantages for this is:
+		1. need for a reliable random number generator.
+		2. sometimes we need priority distinction in between processes so we can give more runtime to a random process.
+	2) Linux like scheduling:
+		In this type of scheduling, we calculate goodness of a process based on the amount of CPU ticks the process executed.
+		The major advantages are:
+		1.Punishing of process which executes its Quantum. This allows the process which did not exhaust its quantum fairness to run.
+		2.No Starvation. No process goes to starvation stage as if a process did not executes in last Quantum then we increase its quantum.
+		The major disadvantages are:
+		1. Recomputing of goodness is an overhead. Every time we have to recompute the goodness thus decreasing the system performance.
+		2. Scalability issue: As the number of process increase in system, it becomes really difficult to manage goodness.
+		
+
+		Refrences: 
+			http://oreilly.com/catalog/linuxkernel/chapter/ch10.html  and class notes.
+
+
+	For round robin scheduling, the default implementation of Xinu.
+	The advantages are:
+	1. Higher priority process executes itself initially, thus if a higher priority process comes it does not face starvation.
+	The disadvantages are:
+	1. Starvation: When we have a round robin scheduling which executes the process which is with maximum priority, which leads to starvation of other processes with lower priority.
+	
+
+2.    Describe the way each of 	the schedulers affects the NULL process.
+A2)
+1. For Round Robin Scheduling: The null process does not executes till there is no process with higher priority.
+2. For Random Scheduling : We execute the null process in round robin fashion, we execute null process when it comes at head. As we keep ratating the queue, when a processes finishes its Quantum it goes and is submitted at the tail of queue.
+	and for next cycle we take the process from head.
+3. For Linux Like Scheduling: In Linux like, we calculate goodness of null process which is 0, as initially we allocate the goodness as the priority of process. Thus null process executes when its term comes but as the amount of time the null process should run is 0, it executes and passes next process to execute. 
